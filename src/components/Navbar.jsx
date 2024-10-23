@@ -9,7 +9,8 @@ export default function Navbar() {
             display: "flex",
             justifyContent: "space-between",
             padding: 4,
-            zIndex: 1
+            zIndex: 1,
+            marginBottom:30
         }}>
             <div style={{marginLeft: 10}}>
                 <Typography variant={"h6"} color = "codGray">Singla Construction Company</Typography>
@@ -20,7 +21,7 @@ export default function Navbar() {
                 <div style={{marginRight: 10}}>
                         <Button
                             onClick={() => {
-                                navigate("/adddepartment")
+                                navigate("/department")
                             }}
                         >Departments</Button>
                     </div>

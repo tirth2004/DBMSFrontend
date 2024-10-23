@@ -24,9 +24,9 @@ export default function ViewDepartments() {
     };
 
     fetch("http://localhost:8080/auth/admin/department", requestOptions)
-      .then((response) => response.json()) // Parse the response as JSON
+      .then((response) => response.json()) 
       .then((result) => {
-        setDepartments(result); // Update state with the result
+        setDepartments(result);
       })
       .catch((error) => console.error(error));
   }, []);

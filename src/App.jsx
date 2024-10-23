@@ -9,6 +9,7 @@ import WorkerLogin from './components/WorkerLogin';
 import Navbar from './components/Navbar';
 import Departments from './components/Departments';
 
+import AdminHome from './components/AdminHome';
 
 const { palette } = createTheme();
 const { augmentColor } = palette;
@@ -39,6 +40,7 @@ function App() {
         <Route path="/client" element={<ClientLogin />} />
         <Route path="/worker" element={<WorkerLogin />} />
         <Route path="/department" element={<Departments />} />
+        <Route path="/home" element={<AdminHome/>}/>
       </Routes>
     </Router>
     </ThemeProvider>

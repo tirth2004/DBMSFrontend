@@ -28,7 +28,8 @@ function LoginCard(props){
           .then((response) => response.text())
           .then((result) => {
             console.log(result)
-            localStorage.setItem("token", result, 5000);
+            localStorage.setItem("token", result);
+            
           })
           .catch((error) => console.error(error));   
         
@@ -46,6 +47,7 @@ function LoginCard(props){
             <TextField id="filled-basic" label="Username" variant="filled" sx={{marginBottom:4}} value={username} onChange={(e)=>{setUsername(e.target.value) }}/>
             <TextField id="filled-basic" label="Password" variant="filled" sx={{marginBottom:4}} value={password} onChange={(e)=>{setPassword(e.target.value) }}/>
             <Button color="codGray" variant="contained" onClick={()=>{generateToken()}}>Login</Button>
+            
         </CustomBox>
         </CardContent>
     </Card>

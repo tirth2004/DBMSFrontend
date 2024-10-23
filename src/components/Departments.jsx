@@ -1,9 +1,9 @@
-import React from 'react'
+
 import CustomBox from './CustomBox'
-import { Container, Typography, Button } from '@mui/material'
+import { Container, Button } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
-export default function () {
+export default function Departments () {
   const navigate = useNavigate();
   return (
     <div>

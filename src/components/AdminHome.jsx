@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import CustomBox from "./CustomBox";
 
 function AdminHome(){
 
@@ -26,8 +27,9 @@ function AdminHome(){
     })
 
     return (
-        <>
-        </>
+        <CustomBox>
+        Hey
+        </CustomBox>
     );
 }
 

@@ -2,11 +2,15 @@
 import { useState } from "react";
 import { Card, CardContent, Typography, Button, TextField } from "@mui/material";
 import CustomBox from "./CustomBox";
+import { useNavigate } from "react-router-dom";
 
 function LoginCard(props){
 
+    const navigate = useNavigate();
+
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    let status = 403;
 
     function generateToken(){
         const myHeaders = new Headers();
@@ -25,10 +29,17 @@ function LoginCard(props){
         };
         
         fetch("http://localhost:8080/auth/generateToken", requestOptions)
-          .then((response) => response.text())
+          .then((response) => {
+            status = response.status
+            return response.text()})
           .then((result) => {
             console.log(result)
+            
             localStorage.setItem("token", result);
+            if(props.title==="Admin" && status===200){
+                props.setLogged("admin")
+                navigate('./home')
+            }
             
           })
           .catch((error) => console.error(error));   

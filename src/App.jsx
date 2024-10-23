@@ -10,6 +10,7 @@ import Navbar from './components/Navbar';
 import Departments from './components/Departments';
 
 import AdminHome from './components/AdminHome';
+import { useEffect, useState } from 'react';
 
 const { palette } = createTheme();
 const { augmentColor } = palette;
@@ -25,18 +26,46 @@ const theme = createTheme({
 
 
 function App() {
+
+  //none for not logged in, or else admin/worker/client whatever the user is
+  const [logged, setLogged] = useState("none")
+
+  //TODO: Only adding to check admin yet, update it when we have API to check for client or worker
+  useEffect(()=>{
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+    myHeaders.append("Content-Type", "application/json");
+    
+
+    
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow"
+    };
+    
+    fetch("http://localhost:8080/auth/admin/", requestOptions)
+      .then((response) => response.text())
+      .then((result) => {console.log(result)
+        if(result==="Welcome to admin Profile"){
+          setLogged("admin")
+        }
+        
+      })
+      .catch((error) => console.error(error));
+  }, [])
   
 
   return (
     <ThemeProvider theme={theme}>
     <CustomBox>
-    <h1>Welcome to Singla Construction Company</h1>
+    {(logged=="none") && <h1>Welcome to Singla Construction Company</h1>}
     </CustomBox>
     
     <Router>
-      <Navbar />
+      {(logged!="none") &&<Navbar />}
       <Routes>
-        <Route path="/" element={<AdminLogin />} />
+        <Route path="/" element={<AdminLogin logged= {logged} setLogged= {setLogged} />} />
         <Route path="/client" element={<ClientLogin />} />
         <Route path="/worker" element={<WorkerLogin />} />
         <Route path="/department" element={<Departments />} />

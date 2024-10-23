@@ -6,6 +6,10 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import CustomBox from './components/CustomBox';
 import ClientLogin from './components/ClientLogin';
 import WorkerLogin from './components/WorkerLogin';
+import Admin from './components/Admin';
+import Navbar from './components/Navbar';
+import Departments from './components/Departments';
+
 
 const { palette } = createTheme();
 const { augmentColor } = palette;
@@ -30,10 +34,9 @@ function App() {
     </CustomBox>
     
     <Router>
+      <Navbar />
       <Routes>
-        <Route path="/" element={<AdminLogin />} />
-        <Route path="/client" element={<ClientLogin />} />
-        <Route path="/worker" element={<WorkerLogin />} />
+        <Route path="/" element={<Home />} />
       </Routes>
     </Router>
     </ThemeProvider>

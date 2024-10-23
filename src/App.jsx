@@ -8,8 +8,12 @@ import ClientLogin from './components/ClientLogin';
 import WorkerLogin from './components/WorkerLogin';
 import Navbar from './components/Navbar';
 import Departments from './components/Departments';
+import AddDepartment from './components/AddDepartment';
+import ViewDepartments from './components/ViewDepartments';
+import AdminHome from './components/AdminHome'
 
-import AdminHome from './components/AdminHome';
+
+
 import { useEffect, useState } from 'react';
 
 const { palette } = createTheme();
@@ -69,6 +73,8 @@ function App() {
         <Route path="/client" element={<ClientLogin />} />
         <Route path="/worker" element={<WorkerLogin />} />
         <Route path="/department" element={<Departments />} />
+        <Route path="/addDepartment" element={<AddDepartment />} />
+        <Route path="/viewDepartments" element={<ViewDepartments />} />
         <Route path="/home" element={<AdminHome/>}/>
       </Routes>
     </Router>

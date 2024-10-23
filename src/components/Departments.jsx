@@ -15,14 +15,14 @@ export default function Departments () {
           <Button variant = "contained" 
                   color = "codGray"
                   onClick={() => {
-                    navigate("/admin/addDepartment")
+                    navigate("/addDepartment")
                   }}>
             Add department
           </Button>
           <Button variant = "contained" 
                   color = "codGray"
                   onClick={() => {
-                    navigate("/admin/viewDepartments")
+                    navigate("/viewDepartments")
                   }}>
             View Departments
           </Button>

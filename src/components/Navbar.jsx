@@ -26,6 +26,13 @@ export default function Navbar() {
                             }}
                         >Departments</Button>
                     </div>
+                    <div>
+                    <Button
+                            onClick={() => {
+                                navigate("/worker")
+                            }}
+                        >Workers</Button>
+                    </div>
 
                     <Button color = "codGray"
                         variant={"contained"}

@@ -3,9 +3,11 @@
 import { useEffect, useState } from "react";
 import CustomBox from "./CustomBox";
 import { Container, Popper, Fade, Paper, Typography, Button, TextField } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 
 function AdminHome(){
+
     const [anchorEl, setAnchorEl] = useState(null);
     const [equip, setEquip] = useState([{
         "id": 2,
@@ -15,6 +17,8 @@ function AdminHome(){
         "id": 3,
         "name": "Bhayani"
     }])
+
+    const navigate = useNavigate();
     
     
 
@@ -105,6 +109,13 @@ function AdminHome(){
             <div style={{display:"flex"}} >
             <Button color="codGray" variant="contained" onClick={handleClick} sx={{marginRight:2}}>Equipments</Button>
             <h4>Add your equipments from here</h4>
+            </div>
+            <br/>
+            <div style={{display:"flex"}} >
+            <Button color="codGray" variant="contained" onClick={()=>{
+                navigate("./clients")
+            }} sx={{marginRight:2, paddingRight:4, paddingLeft:4}}>Clients</Button>
+            <h4>Add your clients from here</h4>
             </div>
         </Container>
         

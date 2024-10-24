@@ -15,6 +15,7 @@ import AdminHome from './components/AdminHome'
 
 
 import { useEffect, useState } from 'react';
+import Clients from './components/Clients';
 
 const { palette } = createTheme();
 const { augmentColor } = palette;
@@ -75,6 +76,8 @@ function App() {
         <Route path="/department" element={<Departments />} />
         <Route path="/addDepartment" element={<AddDepartment />} />
         <Route path="/viewDepartments" element={<ViewDepartments />} />
+        <Route path="/home/clients" element={<Clients />} />
+
         
         <Route path="/home" element={<AdminHome/>}/>
       </Routes>

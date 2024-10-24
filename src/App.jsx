@@ -15,6 +15,9 @@ import AdminHome from './components/AdminHome'
 
 
 import { useEffect, useState } from 'react';
+import ViewWorkers from './components/ViewWorkers';
+import AddWorker from './components/AddWorker';
+import Workers from './components/Worker';
 import Clients from './components/Clients';
 
 const { palette } = createTheme();
@@ -76,9 +79,12 @@ function App() {
         <Route path="/department" element={<Departments />} />
         <Route path="/addDepartment" element={<AddDepartment />} />
         <Route path="/viewDepartments" element={<ViewDepartments />} />
+        <Route path="/workerhome" element={<Workers />} />
+        <Route path="/addWorker" element={<AddWorker />} />
+        <Route path="/viewWorkers" element={<ViewWorkers />} />
         <Route path="/home/clients" element={<Clients />} />
 
-        
+
         <Route path="/home" element={<AdminHome/>}/>
       </Routes>
     </Router>

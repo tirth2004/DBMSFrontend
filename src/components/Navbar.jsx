@@ -29,7 +29,7 @@ export default function Navbar() {
                     <div>
                     <Button
                             onClick={() => {
-                                navigate("/worker")
+                                navigate("/workerhome")
                             }}
                         >Workers</Button>
                     </div>

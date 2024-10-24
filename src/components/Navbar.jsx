@@ -14,7 +14,7 @@ export default function Navbar() {
             marginBottom:30
         }}>
             <div style={{marginLeft: 10}}>
-                <Typography variant={"h6"} color = "codGray">Singla Construction Company</Typography>
+                <Typography variant={"h6"} fontFamily="Roboto Mono" color = "codGray">Singla Construction Company</Typography>
             </div>
 
             <div style={{display: "flex"}}>

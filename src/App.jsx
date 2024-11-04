@@ -121,7 +121,7 @@ function App() {
     </CustomBox>
     
     <Router>
-      {(logged!="none") &&<Navbar />}
+      {(logged!="none") &&<Navbar logged={logged} />}
       <Routes>
         <Route path="/" element={
           logged === "none" ? <AdminLogin logged={logged} setLogged={setLogged} /> :

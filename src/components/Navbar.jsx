@@ -4,7 +4,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import DepartmentPopper from './DepartmentPopper';
 
-export default function Navbar() {
+export default function Navbar(props) {
     const [open, setOpen] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -30,7 +30,7 @@ export default function Navbar() {
             <div style={{display: "flex"}}>
                 <div style={{marginRight: 10, display: "flex"}}>
                 
-                <Button color="codGray" variant="contained" onClick={handleClick} sx={{marginRight:2, paddingRight:3, paddingLeft:3}}>Department</Button>
+                {(props.logged=="admin") ?  <Button color="codGray" variant="contained" onClick={handleClick} sx={{marginRight:2, paddingRight:3, paddingLeft:3}}>Department</Button>:""}
                 <DepartmentPopper open={open} anchorEl={anchorEl}></DepartmentPopper>
 
                     <Button color = "codGray"

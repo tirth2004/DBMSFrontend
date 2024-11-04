@@ -2,6 +2,7 @@
 import { Button, Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
 import CustomBox from "./CustomBox";
 import { useEffect, useState } from "react";
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
 export default function Clients(){
 
@@ -89,13 +90,32 @@ export default function Clients(){
         console.log(data)
     }
 
+    function handleDelete(id){
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+        
+        const requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          redirect: "follow"
+        };
+        
+        fetch(`http://localhost:8080/auth/admin/deleteClient/${id}`, requestOptions)
+          .then((response) => response.text())
+          .then((result) => {console.log(result)
+            setClients(clients.filter((client)=>client.id!=id))
+            setFiltered(filtered.filter((client)=>client.id!=id))
+          })
+          .catch((error) => console.error(error));
+    }
+
 
 
 
 
     return <Container>
         <CustomBox>
-            <h2>Welcome to client page</h2>
+            <h2>Clients</h2>
             
         </CustomBox>
         <TextField id="standard-basic" variant="standard" sx={{marginBottom:4}} label="Search for username" value={search} onChange={(e)=>{handleSearch(e)}}/>
@@ -110,6 +130,7 @@ export default function Clients(){
                         <TableCell align="right" sx={{fontFamily:"Roboto Mono"}}>Email</TableCell>
                         <TableCell align="right" sx={{fontFamily:"Roboto Mono"}}>Address</TableCell>
                         <TableCell align="right" sx={{fontFamily:"Roboto Mono"}}>Phone number</TableCell>
+                        <TableCell align="right" sx={{fontFamily:"Roboto Mono"}}></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -125,6 +146,9 @@ export default function Clients(){
                             <TableCell align="right" sx={{fontFamily:"Roboto Mono"}}>{obj.email}</TableCell>
                             <TableCell align="right" sx={{fontFamily:"Roboto Mono"}}>{obj.address}</TableCell>
                             <TableCell align="right" sx={{fontFamily:"Roboto Mono"}}>{obj.phoneNo}</TableCell>
+                            <TableCell align="right" sx={{fontFamily:"Roboto Mono"}}><DeleteOutlinedIcon sx={{ "&:hover": { color: "red" } }} onClick={()=>{
+                                handleDelete(obj.id)
+                            }}/></TableCell>
 
                         </TableRow>
                     )

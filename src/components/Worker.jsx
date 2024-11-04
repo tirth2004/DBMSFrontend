@@ -2,6 +2,7 @@
 import CustomBox from './CustomBox'
 import { Container, Button } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import ViewWorkers from './ViewWorkers';
 
 export default function Workers () {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ export default function Workers () {
       <Container>
         <CustomBox>
           <h1>
-            Manage workers here
+            Workers
           </h1>
           <Button variant = "contained" 
                   color = "codGray"
@@ -19,13 +20,8 @@ export default function Workers () {
                   }}>
             Add Workers
           </Button>
-          <Button variant = "contained" 
-                  color = "codGray"
-                  onClick={() => {
-                    navigate("/viewWorkers")
-                  }}>
-            View Workers
-          </Button>
+          
+          <ViewWorkers></ViewWorkers>
         </CustomBox>
       </Container>
     </div>

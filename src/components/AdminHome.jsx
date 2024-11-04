@@ -125,12 +125,6 @@ function AdminHome(){
             <h4>Add your Workers from here</h4>
             </div>
             <br/>
-            <div style={{display:"flex"}}>
-            <Button color="codGray" variant="contained" onClick={()=>{
-                navigate("../department")
-            }} sx={{marginRight:2, paddingRight:3, paddingLeft:3}}>Department</Button>
-            <h4>Add your departments from here</h4>
-            </div>
         </Container>
         
     );

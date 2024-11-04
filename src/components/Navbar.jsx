@@ -2,8 +2,18 @@
 import { Button, Typography } from '@mui/material';
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import DepartmentPopper from './DepartmentPopper';
 
 export default function Navbar() {
+    const [open, setOpen] = React.useState(false);
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+        setOpen((previousOpen) => !previousOpen);
+    };
+
     const navigate = useNavigate();
     return (
         <div style={{
@@ -20,7 +30,8 @@ export default function Navbar() {
             <div style={{display: "flex"}}>
                 <div style={{marginRight: 10, display: "flex"}}>
                 
-                    
+                <Button color="codGray" variant="contained" onClick={handleClick} sx={{marginRight:2, paddingRight:3, paddingLeft:3}}>Department</Button>
+                <DepartmentPopper open={open} anchorEl={anchorEl}></DepartmentPopper>
 
                     <Button color = "codGray"
                         variant={"contained"}

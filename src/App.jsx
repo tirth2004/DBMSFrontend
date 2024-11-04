@@ -11,7 +11,7 @@ import Departments from './components/Departments';
 import AddDepartment from './components/AddDepartment';
 import ViewDepartments from './components/ViewDepartments';
 import AdminHome from './components/AdminHome'
-
+import AccessDenied from './components/AccessDenied';
 
 
 import { useEffect, useState } from 'react';
@@ -20,6 +20,7 @@ import AddWorker from './components/AddWorker';
 import Workers from './components/Worker';
 import Clients from './components/Clients';
 import Lost from './components/Lost';
+import ClientHome from './components/ClientHome';
 
 const { palette } = createTheme();
 const { augmentColor } = palette;
@@ -75,16 +76,17 @@ function App() {
       {(logged!="none") &&<Navbar />}
       <Routes>
         <Route path="/" element={<AdminLogin logged= {logged} setLogged= {setLogged} />} />
-        <Route path="/client" element={<ClientLogin />} />
+        <Route path="/client" element={<ClientLogin  logged= {logged} setLogged= {setLogged}/>} />
         <Route path="/worker" element={<WorkerLogin />} />
-        <Route path="/department" element={<Departments />} />
-        <Route path="/addDepartment" element={<AddDepartment />} />
-        <Route path="/viewDepartments" element={<ViewDepartments />} />
-        <Route path="/workerhome" element={<Workers />} />
-        <Route path="/addWorker" element={<AddWorker />} />
-        <Route path="/viewWorkers" element={<ViewWorkers />} />
-        <Route path="/home/clients" element={<Clients />} />
-        <Route path="/home" element={<AdminHome/>}/>
+        <Route path="/department" element={(logged=="admin")?<Departments />: <AccessDenied/>} />
+        <Route path="/addDepartment" element={(logged=="admin")?<AddDepartment />:<AccessDenied/>} />
+        <Route path="/viewDepartments" element={(logged=="admin")?<ViewDepartments />:<AccessDenied/>} />
+        <Route path="/workerhome" element={(logged=="admin")?<Workers />:<AccessDenied/>} />
+        <Route path="/addWorker" element={(logged=="admin")?<AddWorker />:<AccessDenied/>} />
+        <Route path="/viewWorkers" element={(logged=="admin")?<ViewWorkers />:<AccessDenied/>} />
+        <Route path="/home/clients" element={(logged=="admin")?<Clients />:<AccessDenied/>} />
+        <Route path="/home" element={(logged=="admin")?<AdminHome/> :<AccessDenied/>}/>
+        <Route path="/client/home" element={(logged=="client")?<ClientHome />:<AccessDenied/>}/>
         <Route path="*" element={<Lost />} />
       </Routes>
     </Router>

@@ -12,7 +12,7 @@ import AddDepartment from './components/AddDepartment';
 import ViewDepartments from './components/ViewDepartments';
 import AdminHome from './components/AdminHome'
 import AccessDenied from './components/AccessDenied';
-
+import Loader from './components/Loader';
 
 import { useEffect, useState } from 'react';
 import ViewWorkers from './components/ViewWorkers';
@@ -40,57 +40,11 @@ function App() {
 
   //none for not logged in, or else admin/worker/client whatever the user is
   const [logged, setLogged] = useState("none")
+  const [loading, setLoading] = useState(true)
 
-  //TODO: Only adding to check admin yet, update it when we have API to check for client or worker
-  useEffect(()=>{
-    const myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
-    myHeaders.append("Content-Type", "application/json");
-    
 
-    
-    const requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow"
-    };
-    
-    fetch("http://localhost:8080/auth/admin/", requestOptions)
-      .then((response) => response.text())
-      .then((result) => {console.log(result)
-        if(result==="Welcome to admin Profile"){
-          setLogged("admin")
-        }
-        
-      })
-      .catch((error) => console.error(error));
-  }, [])
 
-  useEffect(()=>{
-    const myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
-    myHeaders.append("Content-Type", "application/json");
-    
-
-    
-    const requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow"
-    };
-    
-    fetch("http://localhost:8080/auth/client/", requestOptions)
-      .then((response) => response.text())
-      .then((result) => {console.log(result)
-        if(result==="Welcome to client Profile"){
-          setLogged("client")
-        }
-        
-      })
-      .catch((error) => console.error(error));
-  }, [])
-  
-  useEffect(()=>{
+  function checkWorker(){
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
     myHeaders.append("Content-Type", "application/json");
@@ -110,48 +64,113 @@ function App() {
           setLogged("worker")
         }
         
+        setLoading(false)
+        
+      })
+      .catch((error) => console.error(error));
+  }
+
+  function checkClient(){
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+    myHeaders.append("Content-Type", "application/json");
+    
+
+    
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow"
+    };
+    
+    fetch("http://localhost:8080/auth/client/", requestOptions)
+      .then((response) => response.text())
+      .then((result) => {console.log(result)
+        if(result==="Welcome to client Profile"){
+          setLogged("client")
+          setLoading(false)
+        } else {
+          checkWorker()
+        }
+        
+      })
+      .catch((error) => console.error(error));
+  }
+
+  useEffect(()=>{
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+    myHeaders.append("Content-Type", "application/json");
+    
+
+    
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow"
+    };
+    
+    fetch("http://localhost:8080/auth/admin/", requestOptions)
+      .then((response) => response.text())
+      .then((result) => {console.log(result)
+        if(result==="Welcome to admin Profile"){
+          setLogged("admin")
+          setLoading(false)
+        } else {
+          console.log("Not logged in as admin")
+          checkClient()
+        }
+        
       })
       .catch((error) => console.error(error));
   }, [])
 
+  
+  
+  
+
   return (
+    
     <ThemeProvider theme={theme}>
     <CustomBox>
-    {(logged=="none") && <h1>Welcome to Singla Construction Company</h1>}
+    {loading?"":(logged=="none") && <h1>Welcome to Singla Construction Company</h1>}
     </CustomBox>
     
     <Router>
       {(logged!="none") &&<Navbar logged={logged} />}
       <Routes>
         <Route path="/" element={
+          loading?<Loader/>:
           logged === "none" ? <AdminLogin logged={logged} setLogged={setLogged} /> :
           logged === "admin" ? <AdminHome /> :
           logged === "client" ? <ClientHome /> :
           <WorkerHome />
         } />
         <Route path="/client" element={
+          loading?<Loader/>:
           logged === "none" ? <ClientLogin  logged= {logged} setLogged= {setLogged}/> :
           logged === "admin" ? <AdminHome /> :
           logged === "client" ? <ClientHome /> :
           <WorkerHome />
         } />
         <Route path="/worker" element={
+          loading?<Loader/>:
           logged === "none" ? <WorkerLogin  logged= {logged} setLogged= {setLogged}/> :
           logged === "admin" ? <AdminHome /> :
           logged === "client" ? <ClientHome /> :
           <WorkerHome />
         } />
         
-        <Route path="/department" element={(logged=="admin")?<Departments />: <AccessDenied/>} />
-        <Route path="/addDepartment" element={(logged=="admin")?<AddDepartment />:<AccessDenied/>} />
-        <Route path="/viewDepartments" element={(logged=="admin")?<ViewDepartments />:<AccessDenied/>} />
-        <Route path="/workerhome" element={(logged=="admin")?<Workers />:<AccessDenied/>} />
-        <Route path="/addWorker" element={(logged=="admin")?<AddWorker />:<AccessDenied/>} />
-        <Route path="/viewWorkers" element={(logged=="admin")?<ViewWorkers />:<AccessDenied/>} />
-        <Route path="/home/clients" element={(logged=="admin")?<Clients />:<AccessDenied/>} />
-        <Route path="/home" element={(logged=="admin")?<AdminHome/> :<AccessDenied/>}/>
-        <Route path="/client/home" element={(logged=="client")?<ClientHome />:<AccessDenied/>}/>
-        <Route path="/worker/home" element={(logged=="worker")?<WorkerHome />:<AccessDenied/>}/>
+        <Route path="/department" element={loading?<Loader/>:(logged=="admin")?<Departments />: <AccessDenied/>} />
+        <Route path="/addDepartment" element={loading?<Loader/>:(logged=="admin")?<AddDepartment />:<AccessDenied/>} />
+        <Route path="/viewDepartments" element={loading?<Loader/>:(logged=="admin")?<ViewDepartments />:<AccessDenied/>} />
+        <Route path="/workerhome" element={loading?<Loader/>:(logged=="admin")?<Workers />:<AccessDenied/>} />
+        <Route path="/addWorker" element={loading?<Loader/>:(logged=="admin")?<AddWorker />:<AccessDenied/>} />
+        <Route path="/viewWorkers" element={loading?<Loader/>:(logged=="admin")?<ViewWorkers />:<AccessDenied/>} />
+        <Route path="/home/clients" element={loading?<Loader/>:(logged=="admin")?<Clients />:<AccessDenied/>} />
+        <Route path="/home" element={loading?<Loader/>:(logged=="admin")?<AdminHome/> :<AccessDenied/>}/>
+        <Route path="/client/home" element={loading?<Loader/>:(logged=="client")?<ClientHome />:<AccessDenied/>}/>
+        <Route path="/worker/home" element={loading?<Loader/>:(logged=="worker")?<WorkerHome />:<AccessDenied/>}/>
         <Route path="*" element={<Lost />} />
       </Routes>
     </Router>

@@ -19,20 +19,8 @@ export default function Navbar() {
 
             <div style={{display: "flex"}}>
                 <div style={{marginRight: 10, display: "flex"}}>
-                <div style={{marginRight: 10}}>
-                        <Button
-                            onClick={() => {
-                                navigate("/department")
-                            }}
-                        >Departments</Button>
-                    </div>
-                    <div>
-                    <Button
-                            onClick={() => {
-                                navigate("/workerhome")
-                            }}
-                        >Workers</Button>
-                    </div>
+                
+                    
 
                     <Button color = "codGray"
                         variant={"contained"}

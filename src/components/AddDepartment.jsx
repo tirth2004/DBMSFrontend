@@ -1,8 +1,8 @@
 import { Button, Container, TextField } from '@mui/material'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import CustomBox from './CustomBox'
 
-export default function 
+export default function AddDepartment
 () {
   const[department, setDepartment] = useState("");
   return (

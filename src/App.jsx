@@ -64,6 +64,30 @@ function App() {
       })
       .catch((error) => console.error(error));
   }, [])
+
+  useEffect(()=>{
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+    myHeaders.append("Content-Type", "application/json");
+    
+
+    
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow"
+    };
+    
+    fetch("http://localhost:8080/auth/client/", requestOptions)
+      .then((response) => response.text())
+      .then((result) => {console.log(result)
+        if(result==="Welcome to client Profile"){
+          setLogged("client")
+        }
+        
+      })
+      .catch((error) => console.error(error));
+  }, [])
   
 
   return (
@@ -75,8 +99,18 @@ function App() {
     <Router>
       {(logged!="none") &&<Navbar />}
       <Routes>
-        <Route path="/" element={<AdminLogin logged= {logged} setLogged= {setLogged} />} />
-        <Route path="/client" element={<ClientLogin  logged= {logged} setLogged= {setLogged}/>} />
+        <Route path="/" element={
+          logged === "none" ? <AdminLogin logged={logged} setLogged={setLogged} /> :
+          logged === "admin" ? <AdminHome /> :
+          logged === "client" ? <ClientHome /> :
+          <Lost />
+        } />
+        <Route path="/client" element={
+          logged === "none" ? <ClientLogin  logged= {logged} setLogged= {setLogged}/> :
+          logged === "admin" ? <AdminHome /> :
+          logged === "client" ? <ClientHome /> :
+          <Lost />
+        } />
         <Route path="/worker" element={<WorkerLogin />} />
         <Route path="/department" element={(logged=="admin")?<Departments />: <AccessDenied/>} />
         <Route path="/addDepartment" element={(logged=="admin")?<AddDepartment />:<AccessDenied/>} />

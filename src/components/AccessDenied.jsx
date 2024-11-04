@@ -14,7 +14,7 @@ export default function AccessDenied(){
             
             <Button color = "codGray" variant={"contained"} sx = {{textTransform:"None", fontFamily:"Roboto Mono", marginTop:4,}} onClick={()=>{
                 navigate("/")
-            }}>Go back to login</Button>
+            }}>Go back</Button>
             </CustomBox>
         </Container>
     );

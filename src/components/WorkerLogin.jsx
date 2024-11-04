@@ -7,14 +7,14 @@ import FixedBottomNavigation from "./BottomNavbar";
 
 
 
-function WorkerLogin (){
+function WorkerLogin (props){
     return (
         <Container>
             <CustomBox
 
             >
                 
-                <LoginCard title = "Worker"></LoginCard>
+                <LoginCard title = "Worker" logged = {props.logged} setLogged = {props.setLogged}></LoginCard>
                 
                 
             </CustomBox>

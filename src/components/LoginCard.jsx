@@ -42,6 +42,9 @@ function LoginCard(props){
             } else if(props.title==="Client" && status===200){
               props.setLogged("client")
               navigate('./home')
+            } else if(props.title==="Worker" && status===200){
+              props.setLogged("worker")
+              navigate('./home')
             }
             
           })

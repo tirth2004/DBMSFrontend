@@ -21,6 +21,7 @@ import Workers from './components/Worker';
 import Clients from './components/Clients';
 import Lost from './components/Lost';
 import ClientHome from './components/ClientHome';
+import WorkerHome from './components/WorkerHome';
 
 const { palette } = createTheme();
 const { augmentColor } = palette;
@@ -89,6 +90,29 @@ function App() {
       .catch((error) => console.error(error));
   }, [])
   
+  useEffect(()=>{
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+    myHeaders.append("Content-Type", "application/json");
+    
+
+    
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow"
+    };
+    
+    fetch("http://localhost:8080/auth/worker/", requestOptions)
+      .then((response) => response.text())
+      .then((result) => {console.log(result)
+        if(result==="Welcome to worker Profile"){
+          setLogged("worker")
+        }
+        
+      })
+      .catch((error) => console.error(error));
+  }, [])
 
   return (
     <ThemeProvider theme={theme}>
@@ -103,15 +127,21 @@ function App() {
           logged === "none" ? <AdminLogin logged={logged} setLogged={setLogged} /> :
           logged === "admin" ? <AdminHome /> :
           logged === "client" ? <ClientHome /> :
-          <Lost />
+          <WorkerHome />
         } />
         <Route path="/client" element={
           logged === "none" ? <ClientLogin  logged= {logged} setLogged= {setLogged}/> :
           logged === "admin" ? <AdminHome /> :
           logged === "client" ? <ClientHome /> :
-          <Lost />
+          <WorkerHome />
         } />
-        <Route path="/worker" element={<WorkerLogin />} />
+        <Route path="/worker" element={
+          logged === "none" ? <WorkerLogin  logged= {logged} setLogged= {setLogged}/> :
+          logged === "admin" ? <AdminHome /> :
+          logged === "client" ? <ClientHome /> :
+          <WorkerHome />
+        } />
+        
         <Route path="/department" element={(logged=="admin")?<Departments />: <AccessDenied/>} />
         <Route path="/addDepartment" element={(logged=="admin")?<AddDepartment />:<AccessDenied/>} />
         <Route path="/viewDepartments" element={(logged=="admin")?<ViewDepartments />:<AccessDenied/>} />
@@ -121,6 +151,7 @@ function App() {
         <Route path="/home/clients" element={(logged=="admin")?<Clients />:<AccessDenied/>} />
         <Route path="/home" element={(logged=="admin")?<AdminHome/> :<AccessDenied/>}/>
         <Route path="/client/home" element={(logged=="client")?<ClientHome />:<AccessDenied/>}/>
+        <Route path="/worker/home" element={(logged=="worker")?<WorkerHome />:<AccessDenied/>}/>
         <Route path="*" element={<Lost />} />
       </Routes>
     </Router>

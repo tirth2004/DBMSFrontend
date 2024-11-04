@@ -19,6 +19,7 @@ import ViewWorkers from './components/ViewWorkers';
 import AddWorker from './components/AddWorker';
 import Workers from './components/Worker';
 import Clients from './components/Clients';
+import Lost from './components/Lost';
 
 const { palette } = createTheme();
 const { augmentColor } = palette;
@@ -83,9 +84,8 @@ function App() {
         <Route path="/addWorker" element={<AddWorker />} />
         <Route path="/viewWorkers" element={<ViewWorkers />} />
         <Route path="/home/clients" element={<Clients />} />
-
-
         <Route path="/home" element={<AdminHome/>}/>
+        <Route path="*" element={<Lost />} />
       </Routes>
     </Router>
     </ThemeProvider>

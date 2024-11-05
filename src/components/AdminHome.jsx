@@ -113,7 +113,7 @@ function AdminHome(){
             <br/>
             <div style={{display:"flex"}} >
             <Button color="codGray" variant="contained" onClick={()=>{
-                navigate("./clients")
+                navigate("../clients")
             }} sx={{marginRight:2, paddingRight:4, paddingLeft:4}}>Clients</Button>
             <h4>Add your clients from here</h4>
             </div>

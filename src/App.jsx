@@ -167,7 +167,7 @@ function App() {
         <Route path="/workerhome" element={loading?<Loader/>:(logged=="admin")?<Workers />:<AccessDenied/>} />
         <Route path="/addWorker" element={loading?<Loader/>:(logged=="admin")?<AddWorker />:<AccessDenied/>} />
         <Route path="/viewWorkers" element={loading?<Loader/>:(logged=="admin")?<ViewWorkers />:<AccessDenied/>} />
-        <Route path="/home/clients" element={loading?<Loader/>:(logged=="admin")?<Clients />:<AccessDenied/>} />
+        <Route path="/clients" element={loading?<Loader/>:(logged=="admin")?<Clients />:<AccessDenied/>} />
         <Route path="/home" element={loading?<Loader/>:(logged=="admin")?<AdminHome/> :<AccessDenied/>}/>
         <Route path="/client/home" element={loading?<Loader/>:(logged=="client")?<ClientHome />:<AccessDenied/>}/>
         <Route path="/worker/home" element={loading?<Loader/>:(logged=="worker")?<WorkerHome />:<AccessDenied/>}/>

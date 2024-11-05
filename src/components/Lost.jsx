@@ -12,7 +12,7 @@ export default function Lost(){
             <h2>Route not found</h2>
             
             <Button color = "codGray" variant={"contained"} sx = {{textTransform:"None", fontFamily:"Roboto Mono", marginTop:4,}} onClick={()=>{
-                navigate(-1)
+                navigate("./")
             }}>Go back</Button>
             </CustomBox>
         </Container>

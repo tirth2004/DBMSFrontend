@@ -31,11 +31,11 @@ function LoginCard(props){
         fetch("http://localhost:8080/auth/generateToken", requestOptions)
           .then((response) => {
             status = response.status
-            return response.text()})
+            return response.json()})
           .then((result) => {
             console.log(result)
             
-            localStorage.setItem("token", result);
+            localStorage.setItem("token", result.token);
             if(props.title==="Admin" && status===200){
                 props.setLogged("admin")
                 navigate('./home')

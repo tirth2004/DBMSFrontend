@@ -19,6 +19,8 @@ import ViewWorkers from './components/ViewWorkers';
 import AddWorker from './components/AddWorker';
 import Workers from './components/Worker';
 import Clients from './components/Clients';
+import Projects from './components/Projects';
+import Project from './components/Project';
 import Lost from './components/Lost';
 import ClientHome from './components/ClientHome';
 import WorkerHome from './components/WorkerHome';
@@ -139,39 +141,21 @@ function App() {
     <Router>
       {(logged!="none") &&<Navbar logged={logged} />}
       <Routes>
-        <Route path="/" element={
-          loading?<Loader/>:
-          logged === "none" ? <AdminLogin logged={logged} setLogged={setLogged} /> :
-          logged === "admin" ? <AdminHome /> :
-          logged === "client" ? <ClientHome /> :
-          <WorkerHome />
-        } />
-        <Route path="/client" element={
-          loading?<Loader/>:
-          logged === "none" ? <ClientLogin  logged= {logged} setLogged= {setLogged}/> :
-          logged === "admin" ? <AdminHome /> :
-          logged === "client" ? <ClientHome /> :
-          <WorkerHome />
-        } />
-        <Route path="/worker" element={
-          loading?<Loader/>:
-          logged === "none" ? <WorkerLogin  logged= {logged} setLogged= {setLogged}/> :
-          logged === "admin" ? <AdminHome /> :
-          logged === "client" ? <ClientHome /> :
-          <WorkerHome />
-        } />
-        
-        <Route path="/department" element={loading?<Loader/>:(logged=="admin")?<Departments />: <AccessDenied/>} />
-        <Route path="/addDepartment" element={loading?<Loader/>:(logged=="admin")?<AddDepartment />:<AccessDenied/>} />
-        <Route path="/viewDepartments" element={loading?<Loader/>:(logged=="admin")?<ViewDepartments />:<AccessDenied/>} />
-        <Route path="/workerhome" element={loading?<Loader/>:(logged=="admin")?<Workers />:<AccessDenied/>} />
-        <Route path="/addWorker" element={loading?<Loader/>:(logged=="admin")?<AddWorker />:<AccessDenied/>} />
-        <Route path="/viewWorkers" element={loading?<Loader/>:(logged=="admin")?<ViewWorkers />:<AccessDenied/>} />
-        <Route path="/clients" element={loading?<Loader/>:(logged=="admin")?<Clients />:<AccessDenied/>} />
-        <Route path="/home" element={loading?<Loader/>:(logged=="admin")?<AdminHome/> :<AccessDenied/>}/>
-        <Route path="/client/home" element={loading?<Loader/>:(logged=="client")?<ClientHome />:<AccessDenied/>}/>
-        <Route path="/worker/home" element={loading?<Loader/>:(logged=="worker")?<WorkerHome />:<AccessDenied/>}/>
-        <Route path="*" element={<Lost />} />
+        <Route path="/" element={<AdminLogin logged= {logged} setLogged= {setLogged} />} />
+        <Route path="/client" element={<ClientLogin />} />
+        <Route path="/worker" element={<WorkerLogin />} />
+        <Route path="/department" element={<Departments />} />
+        <Route path="/addDepartment" element={<AddDepartment />} />
+        <Route path="/projects" element={<Projects />} />
+        <Route path="/viewDepartments" element={<ViewDepartments />} />
+        <Route path="/workerhome" element={<Workers />} />
+        <Route path="/addWorker" element={<AddWorker />} />
+        <Route path="/viewWorkers" element={<ViewWorkers />} />
+        <Route path="/clients" element={<Clients />} />
+        <Route path="/projects/:id" element={<Project />} />
+
+
+        <Route path="/home" element={<AdminHome/>}/>
       </Routes>
     </Router>
     </ThemeProvider>

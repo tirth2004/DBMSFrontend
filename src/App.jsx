@@ -24,6 +24,10 @@ import Project from './components/Project';
 import Lost from './components/Lost';
 import ClientHome from './components/ClientHome';
 import WorkerHome from './components/WorkerHome';
+import ProjectClient from './components/clientComponents/ProjectClient';
+import ProjectWorker from './components/clientComponents/ProjectWorker';
+import ProjectVisitors from './components/clientComponents/ProjectVisitors';
+import ProjectEquipment from './components/clientComponents/ProjectEquipment';
 
 const { palette } = createTheme();
 const { augmentColor } = palette;
@@ -155,6 +159,9 @@ function App() {
         <Route path="/projects/:id" element={<Project />} />
 
 
+        <Route path="/client/home/workers/:id" element={loading?<Loader/>:(logged=="client")?<ProjectWorker />:<AccessDenied/>}/>
+        <Route path="/client/home/visitors/:id" element={loading?<Loader/>:(logged=="client")?<ProjectVisitors />:<AccessDenied/>}/>
+        <Route path="/client/home/equipment/:id" element={loading?<Loader/>:(logged=="client")?<ProjectEquipment />:<AccessDenied/>}/>
         <Route path="/home" element={<AdminHome/>}/>
       </Routes>
     </Router>

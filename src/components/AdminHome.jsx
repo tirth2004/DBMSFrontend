@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 function AdminHome(){
 
     const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorElMaterial, setAnchorElMaterial] = useState(null); //Similar popper logic for materials
     const [equip, setEquip] = useState([{
         "id": 2,
         "name": "Tirth"
@@ -18,6 +19,8 @@ function AdminHome(){
         "name": "Bhayani"
     }])
 
+    const [material, setMaterial] = useState([])
+
     const navigate = useNavigate();
     
     
@@ -26,6 +29,11 @@ function AdminHome(){
         setAnchorEl(anchorEl ? null : event.currentTarget);
     };
     const open = Boolean(anchorEl);
+
+    const handleClickMaterial = (event) => {
+        setAnchorElMaterial(anchorElMaterial ? null : event.currentTarget);
+    };
+    const openMaterial = Boolean(anchorElMaterial);
     
 
     useEffect(()=>{
@@ -75,6 +83,31 @@ function AdminHome(){
           .catch((error) => console.error(error));
     }, [])
 
+    useEffect(()=>{
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+        
+        const requestOptions = {
+          method: "GET",
+          headers: myHeaders,
+          redirect: "follow"
+        };
+        
+        fetch("http://localhost:8080/auth/admin/material", requestOptions)
+          .then((response) => {
+            
+            return response.json()
+          })
+          .then((result) => {console.log(result)
+            let arr = []
+            for(let i = 0; i<result.length; i++){
+                arr.push(result[i])
+            }
+            setMaterial(arr)
+          })
+          .catch((error) => console.error(error));
+    }, [])
+
     return (
         <Container>
             <CustomBox>
@@ -109,6 +142,33 @@ function AdminHome(){
             <div style={{display:"flex"}} >
             <Button color="codGray" variant="contained" onClick={handleClick} sx={{marginRight:2}}>Equipments</Button>
             <h4>Add your equipments from here</h4>
+            </div>
+            <br/>
+            <Popper
+                sx={{ zIndex: 1200 }}
+                open={openMaterial}
+                anchorEl={anchorElMaterial}
+                placement={"right-start"}
+                transition
+            >
+                {({ TransitionProps }) => (
+                <Fade {...TransitionProps} timeout={350}>
+                    <Paper sx={{padding:4, margin: 1}}>
+                    <CustomBox>
+                    <Typography fontFamily='Roboto Mono' variant="h6" sx={{ p: 2 }}>Materials</Typography>
+                    </CustomBox>
+                    {material.map((obj, index)=>{
+                        return <MaterialCard key={index} obj= {obj}  ></MaterialCard>
+                    })}
+                    {/* <AddEquipment setEquip = {setEquip}></AddEquipment>  */}
+                    
+                    </Paper>
+                </Fade>
+                )}
+            </Popper>
+            <div style={{display:"flex"}} >
+            <Button color="codGray" variant="contained" onClick={handleClickMaterial} sx={{marginRight:2}}>Materials</Button>
+            <h4>Add your Materials from here</h4>
             </div>
             <br/>
             <div style={{display:"flex"}} >
@@ -156,6 +216,42 @@ function EquipmentCard(props){
                     <p>Name: {props.obj.name}</p>
                     <p>Quantity: {props.obj.quantity}</p>
                     <p>Rate per hour: {props.obj.costPerHr}</p>
+
+                    
+                    
+                    </Paper>
+                </Fade>
+                )}
+            </Popper>
+    </div>
+}
+
+function MaterialCard(props){
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleClick = (event) => {
+        setAnchorEl(anchorEl ? null : event.currentTarget);
+    };
+
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popper' : undefined;
+
+    return <div>
+    <Button sx={{marginBottom:1, fontFamily:"Roboto Mono", textTransform: 'none'}} color="codGray" onClick={handleClick} >{props.obj.name} </Button>
+    <Popper
+                sx={{ zIndex: 1200}}
+                open={open}
+                anchorEl={anchorEl}
+                placement={"right-start"}
+                transition
+            >
+                {({ TransitionProps }) => (
+                <Fade {...TransitionProps} timeout={350}>
+                    <Paper sx={{padding:4, margin: 1, paddingTop:2}}>
+                    
+                    <p>Name: {props.obj.name}</p>
+                    <p>Quantity: {props.obj.quantity}</p>
+                    <p>Stored in: {props.obj.storedIn}</p>
 
                     
                     

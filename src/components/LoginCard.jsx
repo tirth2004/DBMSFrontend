@@ -35,14 +35,17 @@ function LoginCard(props){
           .then((result) => {
             console.log(result)
             
-            localStorage.setItem("token", result.token);
-            if(props.title==="Admin" && status===200){
+            
+            if(props.title==="Admin" && status===200 && result.role==="ROLE_ADMIN"){
+              localStorage.setItem("token", result.token);
                 props.setLogged("admin")
                 navigate('./home')
-            } else if(props.title==="Client" && status===200){
+            } else if(props.title==="Client" && status===200 && result.role==="ROLE_CLIENT"){
+              localStorage.setItem("token", result.token);
               props.setLogged("client")
               navigate('./home')
-            } else if(props.title==="Worker" && status===200){
+            } else if(props.title==="Worker" && status===200 && result.role==="ROLE_WORKER"){
+              localStorage.setItem("token", result.token);
               props.setLogged("worker")
               navigate('./home')
             }

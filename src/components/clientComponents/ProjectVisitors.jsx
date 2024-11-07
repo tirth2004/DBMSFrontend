@@ -85,15 +85,20 @@ function VisitorTable({visitors, allVisitor}){
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {visitors.map((obj)=>{
-                        const visitor = allVisitor.find((item) => item.id === obj.visitorId);
-
+                    
+                    {visitors.map((obj, index)=>{
+                        const visitor = allVisitor.find((item) => item.id === obj.id);
+                        {console.log("Printing ID here:", obj.id)}
+                        
                         return(
-                            <TableRow key={obj.id}>
-                                <TableCell sx={{fontFamily:"Roboto Mono"}}>{obj.visitorId}</TableCell>
-                                <TableCell align="right" sx={{fontFamily:"Roboto Mono"}}>{visitor.firstName}</TableCell>
-                                <TableCell align="right" sx={{fontFamily:"Roboto Mono"}}>{visitor.lastName}</TableCell>
+                        
+                            <TableRow key={index}>
+                                <TableCell sx={{fontFamily:"Roboto Mono"}}>{obj.id}</TableCell>
+                                <TableCell align="right" sx={{fontFamily:"Roboto Mono"}}>{visitor?visitor.firstName:""}</TableCell>
+                                <TableCell align="right" sx={{fontFamily:"Roboto Mono"}}>{visitor?visitor.lastName: ""}</TableCell>
                             </TableRow>
+                            // <p key = {index}>{obj.id}</p>
+                            
                         )
                     })}
                 </TableBody>
